@@ -1,0 +1,22 @@
+{
+  "name": "drop-down-menu",
+  "version": "1.0.0",
+  "description": "create drop down menu",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evelyn-gomez/drop-down-menu.git"
+  },
+  "keywords": [
+    "dropdownmenu"
+  ],
+  "author": "evelyn gomez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evelyn-gomez/drop-down-menu/issues"
+  },
+  "homepage": "https://github.com/evelyn-gomez/drop-down-menu#readme"
+}

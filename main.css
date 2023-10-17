@@ -1,0 +1,40 @@
+
+.menu{
+  display: flex;
+  flex-direction: row;
+  border: 1px solid black;
+  justify-content: space-between;
+}
+
+.drop-down-container{
+  display: flex;
+  flex-direction: column;
+
+}
+
+.drop-down-on-hover{
+  display: flex;
+  line-height: 2.0;
+  padding: 5px;
+}
+.active{
+  background-color: rgb(102, 211, 102);
+}
+
+.drop-down-list > div {
+  display: flex;
+  line-height: 2.0;
+  padding: 5px;
+}
+.drop-down-list > div:hover {
+  background-color: rgb(212, 207, 207);
+}
+
+.drop-down-list{
+  display: flex;
+  flex-direction: column;
+}
+
+.hidden{
+ display: none;
+}
