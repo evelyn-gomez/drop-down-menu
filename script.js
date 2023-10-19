@@ -1,18 +1,17 @@
-export default class DropDownMenu{
+class DropDownMenu{
   /**
    * 
    * @param {string} name 
-   * @param { options?: [] } options
+   * 
    */
-  constructor(name, {options = []} = {}){
+  constructor(name, options = []){
     this.name = name; 
-    this.options = options;  
-    this.dropDownParent = document.createElement("div"); 
-    this.dropDownOptions = document.createElement("div");
-    this.dropDownOnHover = document.createElement("div"); 
-    this.se
+    this.options = options;
   }
-
+  
+  dropDownElements;  
+  optionsElems = []; 
+  id = 0; 
   /**
    * 
    * @param {string} option
@@ -20,42 +19,77 @@ export default class DropDownMenu{
   addOption(option){
     this.options.push(option); 
   }
-  
-  setOptions(){
-    this.dropDownParent.classList.add("drop-down-container"); 
-    this.dropDownOnHover.classList.add("drop-down-on-hover"); 
-    this.dropDownOptions.classList.add("drop-down-list"); 
 
-    this.dropDownOptions.textContent = ""; 
-    this.dropDownOnHover.textContent = this.name
-    
-    let id = 0; 
-    const optionsElem = []; 
+  /**
+   * 
+   * @param {Element} container - element to append to
+   */
+  setIn(container){
+    const containerChildren = container.children; 
+    const dropDownParent = document.createElement("div"); 
+    const dropDownOptions = document.createElement("div");
+    const dropDownPseudoBtn = document.createElement("div"); 
+    dropDownParent.classList.add("drop-down-parent"); 
+    dropDownPseudoBtn.classList.add("drop-down-pseudo-btn"); 
+    dropDownOptions.classList.add("drop-down-list"); 
+    dropDownOptions.classList.add("hidden"); 
+    dropDownPseudoBtn.textContent = this.name
 
-    this.dropDownOptions.classList.add("hidden"); 
+    this.dropDownElements = {
+      parent: dropDownParent,
+      pseduoBtn: dropDownPseudoBtn,
+      options: dropDownOptions
+    }
 
     for(const option of this.options){
       const div = document.createElement("div"); 
-      div.id = id; 
+      div.id = this.id; 
       div.textContent = option; 
-      optionsElem.push(div);
-      this.dropDownOptions.appendChild(div); 
-      id = id+1; 
+      this.optionsElems.push(div); 
+      dropDownOptions.appendChild(div); 
+
+      // div.addEventListener("touchstart", ()=>{
+      //   const currentedSelected = this.optionsElems.find(elem => elem.classList.contains("selected"));
+      //   if(currentedSelected === undefined){
+      //     div.classList.add("selected"); 
+      //   }else{
+      //     currentedSelected.classList.remove("selected"); 
+      //     div.classList.add("selected"); 
+      //   }
+      // })
+
+      this.id = this.id+1; 
     }
 
-    this.dropDownOnHover.addEventListener("mouseover", ()=>{
-      this.dropDownOnHover.classList.add("active"); 
-      this.dropDownOptions.classList.remove("hidden"); 
+    dropDownPseudoBtn.addEventListener("mouseover", ()=>{
+      dropDownPseudoBtn.classList.add("active"); 
+      dropDownOptions.classList.remove("hidden"); 
     }); 
 
-    this.dropDownOptions.addEventListener("mouseleave",  ()=>{
-      this.dropDownOnHover.classList.remove("active"); 
-      this.dropDownOptions.classList.add("hidden"); 
+    dropDownOptions.addEventListener("mouseleave",  ()=>{
+      dropDownPseudoBtn.classList.remove("active");
+      dropDownOptions.classList.add("hidden"); 
+      // this.optionsElems.forEach(elem => {
+      //   if(elem.classList.contains("selected")){
+      //     elem.classList.remove("selected"); 
+      //   }
+      // })
     })
-    
-    this.dropDownParent.appendChild(this.dropDownOnHover); 
-    this.dropDownParent.appendChild(this.dropDownOptions); 
 
-    
+    dropDownParent.appendChild(dropDownPseudoBtn); 
+    dropDownParent.appendChild(dropDownOptions); 
+    container.appendChild(dropDownParent); 
   }
 }
+
+const menu = document.querySelector(".menu");
+const seasons = [ "spring", "summer", "fall", "winter"];
+const primaryColors = [ "red", "yellow", "blue"]; 
+const shapes = ["rectangle", "square", "circle", "triangle"]; 
+const seasonsMenu = new DropDownMenu("seasons", seasons);
+const primaryColorsMenu = new DropDownMenu("primary colors", primaryColors);
+const shapesMenu = new DropDownMenu("shapes", shapes);
+
+seasonsMenu.setIn(menu); 
+primaryColorsMenu.setIn(menu); 
+shapesMenu.setIn(menu); 
