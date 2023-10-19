@@ -48,15 +48,15 @@ class DropDownMenu{
       this.optionsElems.push(div); 
       dropDownOptions.appendChild(div); 
 
-      // div.addEventListener("touchstart", ()=>{
-      //   const currentedSelected = this.optionsElems.find(elem => elem.classList.contains("selected"));
-      //   if(currentedSelected === undefined){
-      //     div.classList.add("selected"); 
-      //   }else{
-      //     currentedSelected.classList.remove("selected"); 
-      //     div.classList.add("selected"); 
-      //   }
-      // })
+      div.addEventListener("touchstart", ()=>{
+        const currentedSelected = this.optionsElems.find(elem => elem.classList.contains("selected"));
+        if(currentedSelected === undefined){
+          div.classList.add("selected"); 
+        }else{
+          currentedSelected.classList.remove("selected"); 
+          div.classList.add("selected"); 
+        }
+      })
 
       this.id = this.id+1; 
     }
