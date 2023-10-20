@@ -69,11 +69,11 @@ class DropDownMenu{
     dropDownOptions.addEventListener("mouseleave",  ()=>{
       dropDownPseudoBtn.classList.remove("active");
       dropDownOptions.classList.add("hidden"); 
-      // this.optionsElems.forEach(elem => {
-      //   if(elem.classList.contains("selected")){
-      //     elem.classList.remove("selected"); 
-      //   }
-      // })
+      this.optionsElems.forEach(elem => {
+        if(elem.classList.contains("selected")){
+          elem.classList.remove("selected"); 
+        }
+      })
     })
 
     dropDownParent.appendChild(dropDownPseudoBtn); 
