@@ -20,6 +20,9 @@ class DropDownMenu{
     }; 
   }
 
+  mobileOptions = []; 
+  dpOptions = []; 
+
   #mobile(container){
     const dp = this.#elements(); 
 
@@ -29,18 +32,17 @@ class DropDownMenu{
     dp.options.classList.add("hidden"); 
     dp.pseudoBtn.textContent = this.name; 
 
-    const options = []; 
     let id = 0; 
     for( const option of this.options){
       const div = document.createElement("div"); 
       div.id = id
       div.textContent = option; 
-      options.push(div); 
+      this.mobileOptions.push(div); 
       dp.options.appendChild(div); 
 
       div.addEventListener("touchstart", (e)=>{
         console.log(e);
-         const currentedSelected = options.find(elem => elem.classList.contains("selected"));
+         const currentedSelected = this.mobileOptions .find(elem => elem.classList.contains("selected"));
          if(currentedSelected === undefined){
            div.classList.add("selected"); 
          }else{
@@ -72,13 +74,12 @@ class DropDownMenu{
     dp.options.classList.add("dt-hidden"); 
     dp.pseudoBtn.textContent = this.name; 
 
-    const options = []; 
     let id = 0; 
     for( const option of this.options){
       const div = document.createElement("div"); 
       div.id = id
       div.textContent = option; 
-      options.push(div); 
+      this.dpOptions.push(div); 
       dp.options.appendChild(div);
     
       id = id +1; 
@@ -93,7 +94,7 @@ class DropDownMenu{
     dp.options.addEventListener("mouseleave",  ()=>{
       dp.pseudoBtn.classList.remove("dt-active");
       dp.options.classList.add("dt-hidden"); 
-      options.forEach(elem => {
+      this.dpOptions.forEach(elem => {
         if(elem.classList.contains("dt-selected")){
           elem.classList.remove("dt-selected"); 
         }
