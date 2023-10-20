@@ -8,77 +8,110 @@ class DropDownMenu{
     this.name = name; 
     this.options = options;
   }
-  
-  dropDownElements;  
-  optionsElems = []; 
-  id = 0; 
-  /**
-   * 
-   * @param {string} option
-   */
-  addOption(option){
-    this.options.push(option); 
+
+  #elements(){
+    const dropDownParent = document.createElement("div"); 
+    const dropDownOptions = document.createElement("div");
+    const dropDownPseudoBtn = document.createElement("div"); 
+    return {
+      parent: dropDownParent, 
+      pseudoBtn: dropDownPseudoBtn, 
+      options: dropDownOptions,
+    }; 
   }
 
+  #mobile(container){
+    const dp = this.#elements(); 
+
+    dp.parent.classList.add("drop-down-parent"); 
+    dp.pseudoBtn.classList.add("drop-down-pseudo-btn"); 
+    dp.options.classList.add("drop-down-list"); 
+    dp.options.classList.add("hidden"); 
+    dp.pseudoBtn.textContent = this.name; 
+
+    const options = []; 
+    let id = 0; 
+    for( const option of this.options){
+      const div = document.createElement("div"); 
+      div.id = id
+      div.textContent = option; 
+      options.push(div); 
+      dp.options.appendChild(div); 
+
+      div.addEventListener("touchstart", (e)=>{
+        console.log(e);
+         const currentedSelected = options.find(elem => elem.classList.contains("selected"));
+         if(currentedSelected === undefined){
+           div.classList.add("selected"); 
+         }else{
+           currentedSelected.classList.remove("selected"); 
+           div.classList.add("selected"); 
+         }
+      })
+    
+      id = id +1; 
+    }
+
+    dp.pseudoBtn.addEventListener("touchstart", (e)=>{
+      console.log(e);
+      dp.pseudoBtn.classList.add("active"); 
+      dp.options.classList.remove("hidden"); 
+    });
+    
+    dp.parent.appendChild(dp.pseudoBtn); 
+    dp.parent.appendChild(dp.options); 
+    container.appendChild(dp.parent); 
+  }
+
+  #desktop(container){
+    const dp = this.#elements(); 
+
+    dp.parent.classList.add("dt-drop-down-parent"); 
+    dp.pseudoBtn.classList.add("dt-drop-down-pseudo-btn"); 
+    dp.options.classList.add("dt-drop-down-list"); 
+    dp.options.classList.add("dt-hidden"); 
+    dp.pseudoBtn.textContent = this.name; 
+
+    const options = []; 
+    let id = 0; 
+    for( const option of this.options){
+      const div = document.createElement("div"); 
+      div.id = id
+      div.textContent = option; 
+      options.push(div); 
+      dp.options.appendChild(div);
+    
+      id = id +1; 
+    }
+
+    dp.pseudoBtn.addEventListener("mouseover", (e)=>{
+      console.log(e);
+      dp.pseudoBtn.classList.add("dt-active"); 
+      dp.options.classList.remove("dt-hidden"); 
+    });
+
+    dp.options.addEventListener("mouseleave",  ()=>{
+      dp.pseudoBtn.classList.remove("dt-active");
+      dp.options.classList.add("dt-hidden"); 
+      options.forEach(elem => {
+        if(elem.classList.contains("dt-selected")){
+          elem.classList.remove("dt-selected"); 
+        }
+      })
+    })
+
+    dp.parent.appendChild(dp.pseudoBtn); 
+    dp.parent.appendChild(dp.options); 
+    container.appendChild(dp.parent); 
+
+  }
   /**
    * 
    * @param {Element} container - element to append to
    */
   setIn(container){
-    const containerChildren = container.children; 
-    const dropDownParent = document.createElement("div"); 
-    const dropDownOptions = document.createElement("div");
-    const dropDownPseudoBtn = document.createElement("div"); 
-    dropDownParent.classList.add("drop-down-parent"); 
-    dropDownPseudoBtn.classList.add("drop-down-pseudo-btn"); 
-    dropDownOptions.classList.add("drop-down-list"); 
-    dropDownOptions.classList.add("hidden"); 
-    dropDownPseudoBtn.textContent = this.name
-
-    this.dropDownElements = {
-      parent: dropDownParent,
-      pseduoBtn: dropDownPseudoBtn,
-      options: dropDownOptions
-    }
-
-    for(const option of this.options){
-      const div = document.createElement("div"); 
-      div.id = this.id; 
-      div.textContent = option; 
-      this.optionsElems.push(div); 
-      dropDownOptions.appendChild(div); 
-
-      div.addEventListener("touchstart", ()=>{
-        const currentedSelected = this.optionsElems.find(elem => elem.classList.contains("selected"));
-        if(currentedSelected === undefined){
-          div.classList.add("selected"); 
-        }else{
-          currentedSelected.classList.remove("selected"); 
-          div.classList.add("selected"); 
-        }
-      })
-
-      this.id = this.id+1; 
-    }
-
-    dropDownPseudoBtn.addEventListener("mouseover", ()=>{
-      dropDownPseudoBtn.classList.add("active"); 
-      dropDownOptions.classList.remove("hidden"); 
-    }); 
-
-    dropDownOptions.addEventListener("mouseleave",  ()=>{
-      dropDownPseudoBtn.classList.remove("active");
-      dropDownOptions.classList.add("hidden"); 
-      this.optionsElems.forEach(elem => {
-        if(elem.classList.contains("selected")){
-          elem.classList.remove("selected"); 
-        }
-      })
-    })
-
-    dropDownParent.appendChild(dropDownPseudoBtn); 
-    dropDownParent.appendChild(dropDownOptions); 
-    container.appendChild(dropDownParent); 
+    this.#mobile(container); 
+    this.#desktop(container); 
   }
 }
 
@@ -93,3 +126,5 @@ const shapesMenu = new DropDownMenu("shapes", shapes);
 seasonsMenu.setIn(menu); 
 primaryColorsMenu.setIn(menu); 
 shapesMenu.setIn(menu); 
+
+

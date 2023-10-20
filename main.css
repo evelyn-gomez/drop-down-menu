@@ -19,9 +19,6 @@ body{
   width: inherit;
 }
 
-.cont-active{
-
-}
 .active{
   background-color: rgb(102, 211, 102);
 }
@@ -33,28 +30,57 @@ body{
   width: inherit;
 }
 
-.drop-down-list > div:hover{
+.selected{
   background-color: rgb(212, 207, 207);
-}
-
-/* .selected{
-  background-color: rgb(212, 207, 207);
-} */
-
-.drop-down-list{
-}
+} 
 
 .hidden{
  display: none;
 }
 
+.dt-drop-down-parent{
+  display: none
+}
 
 @media (min-width: 640px) {  
+  .drop-down-parent{
+    display: none;
+  }
 
+  .dt-drop-down-parent{
+    display: block;
+  }
+  .dt-drop-down-pseudo-btn{
+    width: inherit;
+  }
+  .dt-drop-down-list{
+    width: inherit;
+  }
+
+  .dt-active{
+    background-color: rgb(102, 211, 102);
+  }
+  
+  .dt-drop-down-list > div {
+    display: flex;
+    line-height: 2.0;
+    padding: 5px; 
+    width: inherit;
+  }
+  
+  .dt-drop-down-list > div:hover{
+    background-color: rgb(212, 207, 207);
+  }
+  .dt-selected{
+    background-color: rgb(212, 207, 207);
+  } 
+  
+  .dt-hidden{
+   display: none;
+  }
 
 }
 
-/* .menu{
   display: flex;
   flex-direction: row;
   border: 1px solid black;
